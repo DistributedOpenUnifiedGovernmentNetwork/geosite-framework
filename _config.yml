@@ -1,0 +1,86 @@
+name: geosite-framework
+description: "Jekyll framework for building spatially-enabled, data-enabled sites"
+logo: ""
+markdown: redcarpet
+timezone: America/New_York
+permalink: none
+# Local Dev
+#baseurl: 
+#url: http://localhost:8000
+#destination: /var/www
+# GitHub Pages
+baseurl: /geosite-framework
+url: http://DistributedOpenUnifiedGovernmentNetwork.github.io/geosite-framework
+destination: _site
+# Production
+#baseurl: 
+#url: http://example.com
+#destination: /var/www
+
+# Explicit excludes, including dotfiles to be safe
+exclude: [.DS_Store, .git, .gitignore, .vagrant, Gruntfile.js, Vagrantfile, package.json, node_modules, backups, _assets/img/src-images]
+
+# Markdown Configuration
+redcarpet:
+  extensions: [with_toc_data]
+
+# General
+edit: true
+code: "https://github.com/DistributedOpenUnifiedGovernmentNetwork/geosite-framework"
+branch: "gh-pages"
+disclaimer: "This site is produced and maintained by TBD.  For more information see the [About Us](/hiu.state.gov/about) page."
+privacy: ""
+copyright: ""
+
+# Analytics
+ga:
+  enabled: false
+  code: "UA-XXXXXX-1"
+
+dap:
+  enabled: false
+  agency: ""
+  subagency: ""
+
+# Twitter
+twittercard:
+  enabled: true
+  site: ""
+
+# Open Graph
+opengraph:
+  enabled: true
+
+# Debugging & Testing
+debug:
+  polyfill: false
+  main: true
+  angular: false
+  bootstrap: false
+  jquery: false
+  leaflet: true
+
+# Dependencies Management
+deps:
+  angular:
+    version: "1.4.0-beta.4"
+  jquery:
+    version: "1.9.1"
+
+# GeoNode
+# The first GeoNode is the primary one that is loaded on the homepage.
+geonodes:
+
+# Document & Media Storage
+storage:
+  thumbnails_products: "https://s3.amazonaws.com/<bucket>/products"
+  thumbnails_regions: "https://s3.amazonaws.com/<bucket>/regions"
+  thumbnails_guides: "https://s3.amazonaws.com/<bucket>/guides"
+  thumbnails_platforms: "https://s3.amazonaws.com/<bucket>/platforms"
+  products: "https://s3.amazonaws.com/<bucket>"
+
+# MapBox
+mapbox:
+  access_token: "<access_token>"
+  url_tiles: "https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token="
+  url_utfgrid: "http://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.grid.json?callback={cb}&access_token="

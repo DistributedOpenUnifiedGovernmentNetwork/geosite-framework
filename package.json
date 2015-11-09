@@ -1,0 +1,31 @@
+{
+  "name": "geosite-framework",
+  "version": "0.0.1",
+  "author": "U.S. Government",
+  "description": "Jekyll framework for building spatially-enabled, data-enabled sites",
+  "contributors": [
+    {
+      "name": "Patrick Dufour"
+    }
+  ],
+  "scripts": {
+    "test": "jshint **.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DistributedOpenUnifiedGovernmentNetwork/geosite-framework"
+  },
+  "license": "MIT",
+  "private": "false",
+  "devDependencies": {
+    "del": "*",
+    "path": "*",
+    "gulp": "^3.9.0",
+    "gulp-concat": "*",
+    "gulp-jshint": "*",
+    "gulp-minify": "*",
+    "gulp-uglify": "*",
+    "gulp-rename": "*",
+    "gulp-less": "*"
+  }
+}

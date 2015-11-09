@@ -1,0 +1,46 @@
+---
+layout: default
+---
+{
+    "title": "{{ site.name }}",
+    "url": "{{ site.url }}",
+    "regions": 
+    {
+        {% for r in site.categories.regions %}"{{ r.region_id }}":"{{ r.title }}"{% unless forloop.last %},{% endunless %}{% endfor %}
+    },
+    "repos":
+    [
+        {% for r in site.categories.repos %}
+        {"id":"{{ r.id }}","title":"{{ r.title }}","description":"{{ r.description }}","url":"{{ r.refurl }}"}{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+    ],
+    "count":
+    {
+        "regions": {{ site.categories.regions | size }},
+        "events": {{ site.categories.events | size }},
+        "products": {{ site.categories.products | size }},
+        "repos": {{ site.categories.repos | size }},
+        "programs": {{ site.categories.programs | size }}
+    },
+    "geonodes":
+    [
+        {% for gn in site.geonodes %}
+        {
+            "name":"{{ gn.name }}",
+            "layers":"{{ gn.layers }}",
+            "wms":"{{ gn.wms }}",
+            "tiles":"{{ gn.tiles }}"
+        }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+    ],
+    "storage":
+    {
+        "products":"{{ site.storage_products }}",
+        "thumbnails_products":"{{ site.storage_thumbnails_products }}"
+    },
+    "api":
+    {
+        "events":"{{ site.url }}/events/events.json",
+        "products":"{{ site.url }}/products/products.json"
+    }
+}

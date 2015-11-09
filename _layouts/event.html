@@ -1,0 +1,45 @@
+---
+layout: wrapper
+---
+{% assign event = page %}
+{% assign count_products = 0 %}
+{% for product in site.categories.products %}
+  {% if product.events contains event.event_id %}
+    {% assign count_products = count_products | plus: 1 %}
+  {% endif %}
+{% endfor %}
+<div class="col-md-2">
+</div>
+<div class="col-md-8">
+  <div><h2 class="page-title"><a href="{{ site.baseurl }}/events">Events</a> / <a href="{{ site.baseurl }}{{ page.url }}">{{ page.title }}</a></h2></div>
+  {{ event.content | markdownify }}
+  <span style="font-weight:bold;"> -- External Event Pages: </span>
+  {% if event.refurl.hdx %}<a href="{{ event.refurl.hdx }}">HDX</a>{% endif %}
+  <hr>
+  <div><h4 class="page-title">Products & Data</h2></div>
+  <ul class="nav nav-tabs" style="padding: 10px 10px 0px 10px;">
+    <li class="active"><a href="#products" data-toggle="tab">Products ({{ count_products }})</a></li>
+    <li id="tab-data"><a href="#data" data-toggle="tab">Data<span class="count"></span></a></a></li>
+  </ul>
+  <div class="tab-content" style="padding: 10px;">
+    <div id="products" class="tab-pane active">
+      {% for product in site.categories.products %}
+        {% if product.events contains event.event_id %}
+            {% assign showProductTitle = true %}
+            {% capture thecycle %}{% cycle 'odd', 'even' %}{%endcapture%}
+            {% if thecycle == 'odd' %}
+              {% include main/listitem_product_150.html odd=true %}
+            {% else %}
+              {% include main/listitem_product_150.html odd=false %}
+            {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div id="data" class="tab-pane site-controller" ng-controller="data" data-site-controller-name="data" data-site-controller-type="data" data-site-controller-url="{{ site.geonodes[0].csw.xml }}" data-site-controller-keyword-filter="{{ event.keyword_filter | join: ';' }}">
+      {% include main/ng_listitem_related_dataset.html %}
+    </div>
+  </div>
+</div>
+<div class="col-md-2">
+  {% include social-media.html %}
+</div>

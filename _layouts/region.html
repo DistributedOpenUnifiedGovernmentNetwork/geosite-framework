@@ -1,0 +1,47 @@
+---
+layout: wrapper
+---
+{% assign count_region = 0 %}
+{% assign count_featured = 0 %}
+{% for product in site.categories.products %}
+  {% if product.region_id == page.region_id %}
+    {% assign count_region = count_region | plus: 1 %}
+    {% if product.featured == true %}
+      {% assign count_featured = count_featured | plus: 1 %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+<div class="col-md-2">
+</div>
+<div class="col-md-8">
+  <div><h2 class="page-title"><a href="{{ site.baseurl }}/regions">Regions</a> / <a href="{{ site.baseurl }}{{ page.url }}">{{ page.title }}</a></h2></div>
+  <ul class="nav nav-tabs" style="padding: 10px 10px 0px 10px;">
+    <li class="active"><a href="#featured" data-toggle="tab">Featured Products ({{ count_featured }})</a></li>
+    <li><a href="#all" data-toggle="tab">All Products ({{ count_region }})</a></li>
+    <li id="tab-data"><a href="#data" data-toggle="tab">Data<span class="count"></span></a></li>
+  </ul>
+  <div class="tab-content" style="padding: 10px;">
+    <div id="featured" class="tab-pane active">
+      {% for product in site.categories.products %}
+        {% if product.region_id == page.region_id %}
+          {% if product.featured == true %}
+            {% include main/listitem_product.html %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div id="all" class="tab-pane">
+      {% for product in site.categories.products %}
+        {% if product.region_id == page.region_id %}
+          {% include main/listitem_product_150.html %}
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div id="data" class="tab-pane site-controller" ng-controller="data" data-site-controller-name="data" data-site-controller-type="data" data-site-controller-url="{{ site.geonodes[0].csw.xml }}" data-site-controller-region-name="{{ page.title }}" data-site-controller-region-filter="{{ page.region_filter | join: ';' }}">
+      {% include main/ng_listitem_related_dataset.html %}
+    </div>
+  </div>
+</div>
+<div class="col-md-2">
+</div>
+

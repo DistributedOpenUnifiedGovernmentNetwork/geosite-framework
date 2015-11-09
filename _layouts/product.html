@@ -1,0 +1,58 @@
+---
+layout: wrapper
+---
+{% assign primary_product = page %}
+{% assign count_region = 0 %}
+{% for related_product in site.categories.products %}
+  {% if related_product.id != primary_product.id %}
+    {% if related_product.region_id == primary_product.region_id %}
+      {% assign count_region = count_region | plus: 1 %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+{% assign region_filter = "" %}
+{% for r in site.categories.regions %}
+  {% if primary_product.region_id == r.region_id %}
+    {% assign region_filter = r.region_filter %}
+  {% endif %}
+{% endfor %}
+<div class="col-md-2">
+</div>
+<div class="col-md-8">
+  <div><h2 class="page-title">{{ page.title }}</h2></div>
+  {% assign product = primary_product %}
+  {% assign download = true %}
+  {% assign showProductTitle = false %}
+  {% include main/listitem_product.html %}
+  <hr>
+  <div><h4 class="page-title">Related Products & Data</h2></div>
+  <ul class="nav nav-tabs" style="padding: 10px 10px 0px 10px;">
+    <li class="active"><a href="#related-products" data-toggle="tab">{{ product.region_title }} Products ({{ count_region }})</a></li>
+    <li id="tab-data"><a href="#related-data" data-toggle="tab">{{ product.region_title }} Data<span class="count"></span></a></a></li>
+  </ul>
+  <div class="tab-content" style="padding: 10px;">
+    <div id="related-products" class="tab-pane active">
+      {% for related_product in site.categories.products %}
+        {% if related_product.id != primary_product.id %}
+          {% if related_product.region_id == primary_product.region_id %}
+            {% assign product = related_product %}
+            {% assign showProductTitle = true %}
+            {% capture thecycle %}{% cycle 'odd', 'even' %}{%endcapture%}
+            {% if thecycle == 'odd' %}
+              {% include main/listitem_product_150.html odd=true %}
+            {% else %}
+              {% include main/listitem_product_150.html odd=false %}
+            {% endif %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div id="related-data" class="tab-pane site-controller" ng-controller="data" data-site-controller-name="data" data-site-controller-type="data" data-site-controller-url="{{ site.geonodes[0].csw.xml }}" data-site-controller-region-name="{{ page.region_title }}" data-site-controller-region-filter="{{ region_filter | join: ';' }}">
+      {% include main/ng_listitem_related_dataset.html %}
+    </div>
+  </div>
+</div>
+<div class="col-md-2">
+  {% include social-media.html %}
+</div>
+

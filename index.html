@@ -1,0 +1,149 @@
+---
+layout: map
+title: "geosite-framework"
+
+tilelayers:
+
+layerswitcher:
+  
+
+---
+<nav id='menu-ui' class='menu-ui'></nav>
+<div id="map" style="top:0px;left:0px;width:100%;height:100%;"></div>
+<script>
+    var layerswitcher = $('#menu-ui');
+    var map = L.map('map').setView([0, 30], 3);
+
+    var geojsonLayers = []; // ordered by options.zIndex
+    ///////////////////////////////
+    for(var i = 0; i < tilelayers.length; i++)
+    {
+        var tl = tilelayers[i];
+        try{ 
+            if(tl.type=="mapbox"||tl.type=="mb")
+            {
+                L.tileLayer(mb_url_tiles, {
+                    id: tl.id,
+                    attribution: tl.attribution
+                }).addTo(map);
+            }
+            else if(tl.type=="geonode"||tl.type=="gn")
+            {
+                L.tileLayer(site.geonodes[tl.geonode].tiles, {
+                    id: tl.id,
+                    attribution: tl.attribution
+                }).addTo(map);
+            }
+        }catch(err){console.log("Could not add tilelayer "+i)};
+    }
+
+    // Products GeoJSON
+    $.ajax({
+        dataType: "json",
+        url: "{{ site.baseurl}}/products/products.json",
+        success: function(response) {
+            var products = L.geoJson(response, {
+                zIndex: 99,
+                onEachFeature: function(feature, layer) {
+                    var popupOptions = {maxWidth: 200};
+                    var popupContent = '<h4><a href="'+feature.properties.url+'">'+feature.properties.title+"</a></h4><br>Date Published: "+feature.properties.date_published+'<br>Region: <a href="{{ site.baseurl }}/regions/'+feature.properties.region_id+'">'+feature.properties.region_title+'</a><br><a href="'+feature.properties.pdf+'">Download</a>';
+                    layer.bindPopup(popupContent, popupOptions);
+                }
+            });
+            products.addTo(map);
+            geojsonLayers.push(products);
+            geojsonLayers = sortLayers(geojsonLayers)
+            updateRenderOrder(geojsonLayers);
+            layerswitcher.append(createLink(map, products, 'Products', products.options.zIndex));
+        }
+    });
+    // Data GeoJSON
+    $.ajax({
+        dataType: "xml",
+        url: "{{ site.geonodes[0].csw.xml }}",
+        success: function(response) {
+            console.log("Response:", response);
+            var geonode_features = [];
+            var geonode_layers = $(response).find("SearchResults").find('MD_Metadata').each(function(){
+                var i = $(this).find("identificationInfo").find("MD_DataIdentification");
+                var distro = $(this).find("distributionInfo").find("MD_Distribution");
+                var b = i.find('EX_GeographicBoundingBox:first');
+                var u = distro.find('onLine').filter(function(){return $(this).find('protocol').find('CharacterString').text()=="WWW:LINK-1.0-http--link"}).find('URL').text();
+                if(u.startsWith("{{ site.geonodes[0].layers }}") && b.length > 0)
+                {
+                    var g = buildBoundingBox(b);
+                    var f =
+                    {
+                        "type": "Feature",
+                        "properties":
+                        {
+                            "name": $(this).find('Name').text(),
+                            "title": i.find('title').find('CharacterString').text(),
+                            "date": i.find('date').find('DateTime').text(),
+                            "abstract": ellipsis(i.find('abstract').find('CharacterString').text().replace('\n',''), 100),
+                            "url": u
+                        },
+                        "geometry":
+                        {
+                            "type": "Polygon",
+                            "coordinates":
+                            [
+                              [
+                                  [g[0], g[1]],
+                                  [g[2], g[1]],
+                                  [g[2], g[3]],
+                                  [g[0], g[3]]
+                              ]
+                            ]                        
+                        }
+                    };
+                    geonode_features.push(f);
+                }
+            });
+            var geonode_geojson =
+            {
+                "type": "FeatureCollection",
+                "features": geonode_features
+            };
+            var geonode_style = {
+               "color": "#0000FF",
+               "fillOpacity": 0,
+               "opacity": 1.0
+            };
+            var datasets = L.geoJson(geonode_geojson, {
+                zIndex: 97,
+                style: geonode_style,
+                onEachFeature: function(feature, layer) {
+                    var popupOptions = {maxWidth: 200};
+                    //layer.setIcon(productIcon);
+                    var popupContent = '<h4 style="word-wrap:break-word;"><a href="'+feature.properties.url+'">'+feature.properties.title+"</a></h4><hr>Abstract<br>"+feature.properties.abstract;
+                    layer.bindPopup(popupContent, popupOptions);
+                }
+            });
+            datasets.addTo(map);
+            geojsonLayers.push(datasets);
+            geojsonLayers = sortLayers(geojsonLayers)
+            updateRenderOrder(geojsonLayers);
+            layerswitcher.append(createLink(map, datasets, 'Datasets', datasets.options.zIndex));
+        }
+    });
+    $.ajax({
+        dataType: "json",
+        url: "{{ site.baseurl}}/events/events.json",
+        success: function(response) {
+            var events = L.geoJson(response, {
+                zIndex: 100,
+                onEachFeature: function(feature, layer) {
+                    var popupOptions = {maxWidth: 200};
+                    var popupContent = '<h4><a href="'+feature.properties.url+'">'+feature.properties.title+'</a></h4>';
+                    layer.bindPopup(popupContent, popupOptions);
+                }
+            });
+            events.addTo(map);
+            geojsonLayers.push(events);
+            geojsonLayers = sortLayers(geojsonLayers)
+            updateRenderOrder(geojsonLayers);
+            layerswitcher.append(createLink(map, events, 'Events', events.options.zIndex));
+        }
+    });
+</script>
