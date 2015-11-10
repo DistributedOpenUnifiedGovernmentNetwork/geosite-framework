@@ -25,7 +25,7 @@ You can more about about our open source software, developer resources, APIs, an
 
 ## Stack
 
-Learn more about this site's [stack]({{ site.baseurl }}/stack).
+Learn more about this site's [stack]({{ site.baseurl }}/about/stack).
 
 ## Contact
 

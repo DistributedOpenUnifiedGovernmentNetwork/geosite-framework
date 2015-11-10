@@ -14,12 +14,6 @@ title: Guides
     {% assign count_cybergis = count_cybergis | plus: 1 %}
   {% endif %}
 {% endfor %}
-{% assign count_ittc = 0 %}
-{% for guide in site.categories.guides %}
-  {% if guide.keywords contains 'ittc' %}
-    {% assign count_ittc = count_ittc | plus: 1 %}
-  {% endif %}
-{% endfor %}
 {% assign count_site = 0 %}
 {% for guide in site.categories.guides %}
   {% if guide.keywords contains 'site' %}
@@ -27,12 +21,10 @@ title: Guides
   {% endif %}
 {% endfor %}
 
-
   <div><h2 class="page-title">{{ page.title }}</h2></div>
   <ul class="nav nav-tabs" style="padding: 10px 10px 0px 10px;">
     <li class="active"><a href="#featured" data-toggle="tab">Featured ({{ count_featured }})</a></li>
     <li><a href="#cybergis" data-toggle="tab">CyberGIS ({{ count_cybergis }})</a></li>
-    <li><a href="#ittc" data-toggle="tab">ITTC ({{ count_ittc }})</a></li>
     <li><a href="#site" data-toggle="tab">Site ({{ count_site }})</a></li>
     <li><a href="#all" data-toggle="tab">All ({{ site.categories.guides | size }}) </a></li>
   </ul>
@@ -47,13 +39,6 @@ title: Guides
     <div id="cybergis" class="tab-pane active">
       {% for guide in site.categories.guides %}
         {% if guide.keywords contains 'cybergis' %}
-          {% include main/listitem_guide.html %}
-        {% endif %}
-      {% endfor %}
-    </div>
-    <div id="ittc" class="tab-pane active">
-      {% for guide in site.categories.guides %}
-        {% if guide.keywords contains 'ittc' %}
           {% include main/listitem_guide.html %}
         {% endif %}
       {% endfor %}
