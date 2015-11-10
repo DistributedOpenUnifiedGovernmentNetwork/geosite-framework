@@ -8,6 +8,7 @@ date_published: 2015-10-07
 featured: false
 keywords:
   - cybergis
+  - dougn
 ---
 # [Guides]({{ site.baseurl }}/guides) / [{{ page.title }} ({{ page.version }})]({{ site.baseurl }}{{ page.url | remove: '.html'}})
 

@@ -8,6 +8,7 @@ date_published: 2015-10-13
 featured: false
 keywords:
   - cybergis
+  - dougn
   - geonode
   - opendata
 ---

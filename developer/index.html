@@ -5,15 +5,9 @@ layout: wrapper_text
 <h1>Developer</h1>
 
 <h2>Open Source Software</h2>
-<h3>CyberGIS</h3>
+<h3>DOUGN</h3>
 {% for repo in site.categories.repos reversed %}
-  {% if repo.keywords contains 'cybergis' %}
-    <p>{% include main/listitem_repo.html %}</p>
-  {% endif %}
-{% endfor %}
-<h3>Imagery to the Crowd</h3>
-{% for repo in site.categories.repos reversed %}
-  {% if repo.keywords contains 'ittc' %}
+  {% if repo.keywords contains 'dougn' %}
     <p>{% include main/listitem_repo.html %}</p>
   {% endif %}
 {% endfor %}
@@ -22,7 +16,7 @@ layout: wrapper_text
 You can learn more about our APIs, <a href="{{ site.baseurl }}/api">[here]</a>.
 <br>
 <h2>Science and Technology (S&T) Programs</h2>
-<a href="{{ site.baseurl }}/programs>">Click here</a>[Click here]({{ site.baseurl }}/programs) to learn more about our science and technology programs, such as <a href="http://mapgive.state.gov">MapGive</a> and <a href="http://secondarycities.state.gov">Secondary Cities</a>.
+<a href="{{ site.baseurl }}/programs>">Click here</a> to learn more about our science and technology programs.
 <br>
 <h2><a href="{{ site.baseurl}}/websites">Websites</a></h2>
 {% for website in site.categories.websites reversed %}
@@ -30,4 +24,4 @@ You can learn more about our APIs, <a href="{{ site.baseurl }}/api">[here]</a>.
 {% endfor %}
 
 <h2>Contact</h2>
-If you have questions about HIU S&T programs, please contact HIU at <a href="mailto:HIU_DEV@state.gov">HIU_DEV@state.gov</a>.
+TBD

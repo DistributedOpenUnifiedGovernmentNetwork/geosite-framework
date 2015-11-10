@@ -8,6 +8,7 @@ date_published: 2015-10-07
 featured: true
 keywords:
   - cybergis
+  - dougn
   - geonode
 ---
 # [Guides]({{ site.baseurl }}/guides) / [{{ page.title }} ({{ page.version }})]({{ site.baseurl }}{{ page.url | remove: '.html' }})
