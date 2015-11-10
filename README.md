@@ -3,10 +3,10 @@ geosite-framework
 
 ## Description
 
-Jekyll framework for building spatially-enabled, data-enabled sites
+Jekyll framework for building spatially-enabled, data-enabled sites.
 
 ### CyberGIS
-The Humanitarian Information Unit has been developing a sophisticated geographic computing infrastructure referred to as the CyberGIS. The CyberGIS provides highly available, scalable, reliable, and timely geospatial services capable of supporting multiple concurrent projects.  The CyberGIS relies on primarily open source projects, such as PostGIS, GeoServer, GDAL, GeoGit, OGR, and OpenLayers.  The name CyberGIS is dervied from the term geospatial cyberinfrastructure.
+The [Humanitarian Information Unit](http://hiu-beta.state.gov) has been developing a sophisticated geographic computing infrastructure referred to as the CyberGIS. The CyberGIS provides highly available, scalable, reliable, and timely geospatial services capable of supporting multiple concurrent projects.  The CyberGIS relies on primarily open source projects, such as PostGIS, GeoServer, GDAL, GeoGig, OGR, and OpenLayers.  The name CyberGIS is dervied from the term geospatial cyberinfrastructure.
 
 ### ROGUE
 The Rapid Opensource Geospatial User-Driven Enterprise (ROGUE) Joint Capabilities Technology Demonstration (JCTD) is a two-year research & development project developing the technology for distributed geographic data creation and synchronization in a disconnected environement.  This new technology taken altogether is referred to as GeoSHAPE.  See [http://geoshape.org](http://geoshape.org) for more information.  HIU is leveraging the technology developed through ROGUE to build out the CyberGIS into a robust globally distributed infrastruture.
@@ -49,6 +49,8 @@ gulp bootstrap:compile
 
 **Extensionless Permalinks**
 
+To enable extensionless links (like `/post` instead of `/post.html`).
+
 ```
 # http://jekyllrb.com/docs/permalinks/#extensionless-permalinks
 try_files $uri $uri.html $uri/ =404;
@@ -73,11 +75,11 @@ gulp bootstrap:compile
 
 ## Examples
 
-TBD
+Humanitarian Information Unit - [New public website](http://hiu-beta.state.gov)
 
 ## Contributing
 
-This prototype is still very much in alpha stage.  HIU is currently accepting pull requests for this repository.
+This prototype is still very much in beta stage.  We are currently accepting pull requests for this repository.
 
 ## License
 This project constitutes a work of the United States Government and is not subject to domestic copyright protection under 17 USC § 105.
